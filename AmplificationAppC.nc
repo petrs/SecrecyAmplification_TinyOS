@@ -1,5 +1,5 @@
-#define NEW_PRINTF_SEMANTICS
-#include "printf.h"
+//#define NEW_PRINTF_SEMANTICS
+//#include "printf.h"
 
 configuration AmplificationAppC {
 
@@ -11,11 +11,11 @@ implementation {
 	components new TimerMilliC() as TimerMeasureEnd;
 	components new TimerMilliC() as TimerSendRSSI;
 	components new TimerMilliC() as TimerVerify;
-	components new TimerMilliC() as TimerAmpDelay;
+	components new TimerMilliC() as TimerSecAmp;
+	components new TimerMilliC() as TimerBootDelay;
 
 	// printf
-	components new TimerMilliC() as TimerBootDelay;
-	App.TimerBootDelay -> TimerBootDelay;
+	
 	components PrintfC;
 	components SerialStartC;
 	
@@ -25,8 +25,9 @@ implementation {
 	App.TimerMeasureEnd -> TimerMeasureEnd;
 	App.TimerSendRSSI -> TimerSendRSSI;
 	App.TimerVerify -> TimerVerify;
-	App.TimerAmpDelay -> TimerAmpDelay;
-
+	App.TimerSecAmp -> TimerSecAmp;
+	App.TimerBootDelay -> TimerBootDelay;
+  
 	// Wiring for radio communication 
 	App.RadioControl -> RadioAM;
 	App.RadioPacket -> RadioAM;
@@ -63,4 +64,7 @@ implementation {
 	components new AMReceiverC(AM_VERIFY_RESP) as VerifyRespReceive;
 	App.VerifyRespSend -> VerifyRespSend;
 	App.VerifyRespReceive -> VerifyRespReceive;
+
+	components AESC;
+	App.AES->AESC.AES;
 }
